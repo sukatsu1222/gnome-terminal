@@ -34,7 +34,6 @@ set_profile_colors() {
 
   local bg_color_file=$scheme_dir/bg_color
   local fg_color_file=$scheme_dir/fg_color
-  local bd_color_file=$scheme_dir/bd_color
 
   if [ "$newGnome" = "1" ]
     then local profile_path=$dconfdir/$profile
@@ -43,7 +42,6 @@ set_profile_colors() {
     dconf write $profile_path/palette "$(to_dconf < $scheme_dir/palette)"
 
     # set foreground, background and highlight color
-    dconf write $profile_path/bold-color "'$(cat $bd_color_file)'"
     dconf write $profile_path/background-color "'$(cat $bg_color_file)'"
     dconf write $profile_path/foreground-color "'$(cat $fg_color_file)'"
 
@@ -60,7 +58,6 @@ set_profile_colors() {
     gconftool-2 -s -t string $profile_path/palette "$(to_gconf < $scheme_dir/palette)"
 
     # set foreground, background and highlight color
-    gconftool-2 -s -t string $profile_path/bold_color $(cat $bd_color_file)
     gconftool-2 -s -t string $profile_path/background_color \
         $(cat $bg_color_file)
     gconftool-2 -s -t string $profile_path/foreground_color \
