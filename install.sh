@@ -41,7 +41,7 @@ set_profile_colors() {
     # set color palette
     dconf write $profile_path/palette "$(to_dconf < $scheme_dir/palette)"
 
-    # set foreground, background and highlight color
+    # set foreground, background
     dconf write $profile_path/background-color "'$(cat $bg_color_file)'"
     dconf write $profile_path/foreground-color "'$(cat $fg_color_file)'"
 
@@ -49,15 +49,26 @@ set_profile_colors() {
     dconf write $profile_path/use-theme-colors "false"
 
     # set highlighted color to be different from foreground color
-    dconf write $profile_path/bold-color-same-as-fg "false"
+    dconf write $profile_path/bold-color-same-as-fg "true"
 
+    # Specify the font
+    dconf write $profile_path/use-system-font "false"
+    dconf write $profile_path/font "'Cica 14'"
+
+    # set transparent background
+    dconf write $profile_path/use-theme-transparency "false"
+    dconf write $profile_path/use-transparent-background "true"
+    dconf write $profile_path/background-transparency-percent "15"
+
+    # unset audible bell
+    dconf write $profile_path/audible-bell "false"
   else
     local profile_path=$gconfdir/$profile
 
     # set color palette
     gconftool-2 -s -t string $profile_path/palette "$(to_gconf < $scheme_dir/palette)"
 
-    # set foreground, background and highlight color
+    # set foreground, background
     gconftool-2 -s -t string $profile_path/background_color \
         $(cat $bg_color_file)
     gconftool-2 -s -t string $profile_path/foreground_color \
